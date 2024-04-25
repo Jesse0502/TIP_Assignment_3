@@ -1,6 +1,8 @@
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
-const QuizTab = () => {
+const QuizTab = ({ name = "", duration = "", rating = "", image = "" }) => {
+  const navigate = useNavigate();
   return (
     <Box
       //   h="40"
@@ -16,7 +18,7 @@ const QuizTab = () => {
           rounded="10px"
           w={"full"}
           objectFit={"cover"}
-          src="https://dummyimage.com/600x400/000/fff&text=quiz"
+          src={image}
         />
         <Flex
           rounded={"40px"}
@@ -25,26 +27,50 @@ const QuizTab = () => {
           p="1"
           alignItems={"center"}
           bg="white"
-          gap="5px"
           left={"2"}
-          px="10px"
+          pr="10px"
         >
-          <Image
-            border={"1px solid black"}
-            h="35px"
-            rounded={"full"}
-            src="https://t4.ftcdn.net/jpg/02/44/43/69/360_F_244436923_vkMe10KKKiw5bjhZeRDT05moxWcPpdmb.jpg"
-          />
-          <Text>Quiz Creator</Text>
+          <Image h="35px" w="auto" rounded={"full"} src="./app-logo.png" />
+          <Text fontWeight={"bold"}>QuizWiz</Text>
         </Flex>
       </Box>
       <Text pl="2" py="2" fontWeight={"bold"} fontSize={"larger"} pt="10">
-        Science Quiz
+        {name}
       </Text>
-      <Flex px="2" pb="2" alignItems="center" justify={"space-between"}>
-        <Text>Duration</Text>
-        <Text>Rating</Text>
-        <Button colorScheme="green" rounded="20px" px="25px">
+      <Flex
+        textAlign={"center"}
+        px="2"
+        pb="2"
+        alignItems="center"
+        justify={"space-between"}
+      >
+        <Text>
+          Duration{" "}
+          <Text fontWeight={"bold"} fontSize={"medium"}>
+            {" "}
+            {duration}
+          </Text>
+        </Text>
+        <Text>
+          Rating{" "}
+          <Flex>
+            {Array.from({ length: +rating }).map(() => (
+              <>⭐</>
+            ))}
+          </Flex>
+          {/* <Text fontWeight={"bold"} fontSize={"medium"}>
+            {" "}
+            {rating}
+          </Text> */}
+        </Text>
+        <Button
+          onClick={() => {
+            navigate(`/quiz?name=${name}`);
+          }}
+          colorScheme="green"
+          rounded="20px"
+          px="25px"
+        >
           Start
         </Button>
       </Flex>

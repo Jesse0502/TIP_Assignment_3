@@ -9,6 +9,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./Routes/Dashboard.tsx";
 import Search from "./Routes/Search.tsx";
 import Leaderboard from "./Routes/Leaderboard.tsx";
+import Profile from "./Routes/Profile.tsx";
+import Quiz from "./Routes/Quiz.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -21,6 +23,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/search" element={<Search />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/quiz" element={<Quiz />} />
           </Routes>
         </Provider>
       </ChakraProvider>

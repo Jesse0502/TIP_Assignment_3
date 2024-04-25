@@ -6,7 +6,14 @@ const Search = () => {
   return (
     <Flex w="full">
       <Navbar />
-      <Box pr="4" pt="30px" w="full" maxHeight={"100vh"} overflowY={"scroll"}>
+      <Box
+        ml="5"
+        pr="4"
+        pt="30px"
+        w="full"
+        maxHeight={"100vh"}
+        overflowY={"scroll"}
+      >
         <Text fontWeight={"bold"} fontSize={"xx-large"}>
           Search New Quizzes
         </Text>

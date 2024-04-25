@@ -8,6 +8,7 @@ const Leaderboard = () => {
       <Box
         pr="4"
         pt="30px"
+        ml="5"
         // bg="lightgray"
         w="full"
         maxHeight={"100vh"}
