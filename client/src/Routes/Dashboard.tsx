@@ -1,8 +1,13 @@
 import { Box, Center, Flex, Image, Progress, Text } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import QuizTab from "../components/QuizTab";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const userInfo = useSelector((state: RootState) => state.user);
   return (
     <Flex>
       <Navbar />
@@ -15,6 +20,9 @@ const Dashboard = () => {
         overflowY={"scroll"}
       >
         <Text fontWeight={"bold"} fontSize={"xx-large"}>
+          Welcome, {userInfo.fullname}
+        </Text>
+        <Text fontWeight={"bold"} mt="5" fontSize={"x-large"}>
           Featured Quizzes
         </Text>
         <Box mt="5">
@@ -51,27 +59,53 @@ const Dashboard = () => {
             Quiz Categories
           </Text>
           <Flex gap="3" mt="5">
-            <Center p="4" rounded="lg" flexDir={"column"} bg="lightgray">
+            <Center
+              onClick={() => {
+                navigate("/search");
+              }}
+              p="4"
+              rounded="lg"
+              _hover={{ shadow: "md", cursor: "pointer" }}
+              flexDir={"column"}
+              bg="lightgray"
+            >
               <Image src="./search.png" w="7" />
               <Text fontSize={"small"}>Search Quizzes</Text>
             </Center>
             <Center
               p="4"
+              onClick={() => {
+                navigate("/search?q=science");
+              }}
               rounded="lg"
               flexDir={"column"}
+              _hover={{ shadow: "md", cursor: "pointer" }}
               border="1px solid gray"
             >
               <Image src="./science-icon.png" w="7" />
               <Text>Science Quizzes</Text>
             </Center>
-            <Center p="4" bg="lightgray" rounded="lg" flexDir={"column"}>
+            <Center
+              onClick={() => {
+                navigate("/search?q=math");
+              }}
+              p="4"
+              bg="lightgray"
+              rounded="lg"
+              _hover={{ shadow: "md", cursor: "pointer" }}
+              flexDir={"column"}
+            >
               <Image src="./math-icon.png" w="7" />
               <Text>Math Quizzes</Text>
             </Center>
             <Center
               p="4"
+              _hover={{ shadow: "md", cursor: "pointer" }}
               border="1px solid gray"
               rounded="lg"
+              onClick={() => {
+                navigate("/search?q=creative");
+              }}
               flexDir={"column"}
             >
               <Image w="7" src="./creative-icon.png" />
@@ -92,7 +126,6 @@ const Dashboard = () => {
               },
             }}
             mt="2"
-            // mr="3"
             gap="2"
           >
             <MyQuizTab />
