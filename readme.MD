@@ -6,15 +6,15 @@ Instructions for setting up a project with Node.js and running the client and se
 
 ## Requirements
 
-- Node.js (version 20.9 or higher)
-- Yarn package manager
+- Node.js (version 20.9 or higher) https://nodejs.org/en/download
+- Yarn package manager https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable
 
 ## Setup Instructions
 
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/your-username/project-name.git
+   git clone https://github.com/Jesse0502/TIP_Assignment_3.git
    ```
 
 2. **Navigate to the Client Folder**
