@@ -24,6 +24,7 @@ const Search = () => {
             duration: quizExist.duration,
             rating: quizExist.rating,
             image: quizExist.image,
+            questions: quizExist.questions,
           },
         ]);
       } else {
@@ -104,6 +105,7 @@ const Search = () => {
                 name={i.name}
                 duration={i.duration}
                 rating={i.rating}
+                questions={i.questions}
                 image={i.image}
               />
             ))}

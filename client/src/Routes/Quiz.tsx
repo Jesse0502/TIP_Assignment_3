@@ -4,6 +4,12 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
   Button,
   Center,
@@ -12,18 +18,24 @@ import {
   Radio,
   RadioGroup,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import quizLoader from "../helpers/quizLoader";
-import { science_quiz } from "../helpers/constants";
+import { science_quiz, server_endpoint } from "../helpers/constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { setQuizzes } from "../store/quizSlice";
 
 const Quiz = () => {
   const loc = new URLSearchParams(useLocation().search);
   const [quiz, setQuiz] = useState<null | typeof science_quiz>(null);
   const [loading, setLoading] = useState(true);
+  const userInfo = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   useEffect(() => {
     const query = loc.get("name")?.toLocaleLowerCase();
@@ -44,7 +56,7 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showAnswers, setShowAnswers] = useState(false);
-
+  const dispatch = useDispatch();
   const handleNext = () => {
     setCurrentQuestion((prevIndex) => prevIndex + 1);
   };
@@ -53,7 +65,7 @@ const Quiz = () => {
     setCurrentQuestion((prevIndex) => prevIndex - 1);
   };
 
-  const onSubmit = (
+  const onSubmit = async (
     response: string,
     currQuestion: { question: string; answer: string[] }
   ) => {
@@ -69,14 +81,43 @@ const Quiz = () => {
     }
     if (currentQuestion + 1 !== quiz?.questions) handleNext();
     else {
-      userResponses.forEach((i) => {
-        setScore((res) => (i.answer === i.response ? res + 1 : res));
-      });
-      console.log("userResponses", userResponses);
+      handleNext();
+      let calScore = 0;
+      for (let i = 0; i < userResponses.length; i++) {
+        const obj = userResponses[i];
+
+        // Check if answer is equal to response
+        if (obj.answer === obj.response) {
+          // If equal, increment the score by 1
+          calScore++;
+        }
+      }
+      // userResponses.forEach((i) => {
+      setScore(calScore);
+      // });
+      // save to db (user cannot retake the quiz again)
       setShowAnswers(true);
+      const res = await axios.post(server_endpoint + "/submit-quiz", {
+        username: userInfo.username,
+        score: calScore,
+        quiz_name: quiz?.name,
+      });
+      console.log("res submit-quiz", res);
+      dispatch(setQuizzes(res.data.data));
     }
   };
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
+  // const [exitingQuiz, setExitingQuiz] = useState(false);
+
+  const exitQuiz = async () => {
+    // await axios.post(server_endpoint + "/exit-quiz", {
+    //   username: userInfo.username,
+    //   quizName: quiz?.name,
+    // });
+    navigate("/dashboard");
+  };
   return (
     <Flex>
       <Navbar />
@@ -102,8 +143,12 @@ const Quiz = () => {
               {quiz?.name}
             </Text>
             <Flex alignItems={"center"} gap="2">
-              <Text opacity={0.7}>Question 1/{quiz?.questions}</Text>
-              <Button colorScheme="green">Exit Quiz</Button>
+              <Text opacity={0.7}>
+                Question {currentQuestion + 1}/{quiz?.questions}
+              </Text>
+              <Button colorScheme="green" onClick={onOpen}>
+                Exit Quiz
+              </Button>
             </Flex>
           </Flex>
           {/* {quiz?.quiz.map((question, index) => ( */}
@@ -188,6 +233,39 @@ const Quiz = () => {
           {/* ))} */}
         </Box>
       )}
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Your Progress will be lost
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  onClose();
+                  exitQuiz();
+                }}
+                colorScheme="green"
+                ml={3}
+              >
+                Exit
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Flex>
   );
 };
@@ -202,13 +280,11 @@ const SingleQuestion = ({
   const [answered, setAnswered] = useState("");
   const [error, setError] = useState(false);
   useEffect(() => {
-    console.log("currentQuestion", userResponses, currentQuestion);
     setAnswered("");
     setError(false);
     const alreadyAnswered = userResponses.find(
       (i) => i.question === currentQuestion.question
     );
-    console.log("alreadyAnswered", alreadyAnswered, currentQuestion);
     if (alreadyAnswered) {
       setAnswered(alreadyAnswered.response);
     }
@@ -263,7 +339,6 @@ const SingleQuestion = ({
           onClick={(e) => {
             e.preventDefault();
             if (answered) {
-              console.log("answered", answered);
               onSubmit(answered, currentQuestion);
             } else {
               setError(true);
@@ -273,7 +348,7 @@ const SingleQuestion = ({
           Submit
         </Button>
       </Flex>
-      {error && <Text>Please select an answer</Text>}
+      {error && <Text color={"red"}>Please select an answer</Text>}
     </Box>
   );
 };

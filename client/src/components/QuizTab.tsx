@@ -1,8 +1,20 @@
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../store/store";
+import { useEffect, useState } from "react";
 
-const QuizTab = ({ name = "", duration = "", rating = "", image = "" }) => {
+const QuizTab = ({ name = "", questions = "", rating = "", image = "" }) => {
   const navigate = useNavigate();
+  const [quizTaken, setQuizTaken] = useState(null);
+  const quizzes = useSelector((state: RootState) => state.quiz);
+  useEffect(() => {
+    const quizFound = quizzes.quizzesTaken.find((i) => i.quiz_name === name);
+    if (quizFound) {
+      setQuizTaken(quizFound);
+    }
+  }, [quizzes]);
+
   return (
     <Box
       //   h="40"
@@ -13,6 +25,20 @@ const QuizTab = ({ name = "", duration = "", rating = "", image = "" }) => {
       rounded={"10px"}
     >
       <Box pos="relative">
+        {quizTaken && (
+          <Text
+            right={1}
+            bg="white"
+            p="1"
+            rounded="lg"
+            shadow={"md"}
+            top="1"
+            fontWeight={"bold"}
+            pos={"absolute"}
+          >
+            You Scored: {quizTaken?.score}
+          </Text>
+        )}
         <Image
           h="120px"
           rounded="10px"
@@ -45,10 +71,10 @@ const QuizTab = ({ name = "", duration = "", rating = "", image = "" }) => {
         justify={"space-between"}
       >
         <Text>
-          Duration{" "}
+          Questions{" "}
           <Text fontWeight={"bold"} fontSize={"medium"}>
             {" "}
-            {duration}
+            {questions}
           </Text>
         </Text>
         <Text>
@@ -71,7 +97,7 @@ const QuizTab = ({ name = "", duration = "", rating = "", image = "" }) => {
           rounded="20px"
           px="25px"
         >
-          Start
+          {quizTaken ? "Retake" : "Start"}
         </Button>
       </Flex>
     </Box>

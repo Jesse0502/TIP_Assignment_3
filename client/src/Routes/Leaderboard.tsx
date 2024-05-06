@@ -1,7 +1,14 @@
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const Leaderboard = () => {
+  const leaderboard = useSelector(
+    (state: RootState) => state.leaderboard.leaderboard
+  );
+  const currentUser = useSelector((state: RootState) => state.user);
+  console.log("leaderboard", leaderboard);
   return (
     <Flex>
       <Navbar />
@@ -19,8 +26,9 @@ const Leaderboard = () => {
         </Text>
         <Text mt="5" fontWeight={"medium"} fontSize={"x-large"}></Text>
         <Flex mt="4" justify="space-between" gap="3">
-          {Array.from({ length: 3 }).map((i, idx) => (
+          {leaderboard.slice(0, 3).map((i, idx) => (
             <Flex
+              color="white"
               p="2"
               alignItems={"center"}
               //   color="white"
@@ -29,10 +37,12 @@ const Leaderboard = () => {
               rounded="md"
             >
               <Text>{idx + 1}.</Text>
-              <Avatar mx="3" size="md" />
+              <Avatar mx="3" size="md" name={i.username} />
               <Box>
-                <Text fontWeight={"bold"}>User{idx + 3}</Text>
-                <Text fontWeight={"small"}>10000 points</Text>
+                <Text fontWeight={"bold"}>
+                  {currentUser.username === i.username ? "You" : i.username}
+                </Text>
+                <Text fontWeight={"small"}>{i.totalPoints ?? 0} points</Text>
               </Box>
             </Flex>
           ))}
@@ -40,7 +50,7 @@ const Leaderboard = () => {
         <Text mt="5" fontWeight={"bold"} fontSize={"x-large"}>
           Leaderboard List
         </Text>
-        {Array.from({ length: 7 }).map((i, idx) => (
+        {leaderboard.slice(3).map((i, idx) => (
           <Flex
             my="3"
             p="2"
@@ -50,10 +60,12 @@ const Leaderboard = () => {
             w="full"
           >
             <Text>{idx + 4}.</Text>
-            <Avatar mx="3" size="md" />
+            <Avatar mx="3" size="md" name={i.username} />
             <Box>
-              <Text fontWeight={"bold"}>User{idx + 4}</Text>
-              <Text fontWeight={"medium"}>{8000 - idx + 4} points</Text>
+              <Text fontWeight={"bold"}>
+                {i.username === currentUser.username ? "You" : i.username}
+              </Text>
+              <Text fontWeight={"medium"}>{i.totalPoints} points</Text>
             </Box>
           </Flex>
         ))}

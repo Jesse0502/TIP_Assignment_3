@@ -1,5 +1,6 @@
 import { Center, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+// import {} from '@chakra-ui/icons'
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ const Navbar = () => {
         ></Image>
         <Image
           w="7"
+          cursor={"pointer"}
           h="auto"
           src={
             window.location.href.includes("leaderboard")
@@ -55,6 +57,7 @@ const Navbar = () => {
         ></Image>
         <Image
           w="7"
+          cursor={"pointer"}
           h="auto"
           src={
             window.location.href.includes("profile")
@@ -65,6 +68,17 @@ const Navbar = () => {
             navigate("/profile");
           }}
         ></Image>
+        <Image
+          w="7"
+          h={"auto"}
+          pt="52"
+          cursor={"pointer"}
+          onClick={() => {
+            localStorage.removeItem("username");
+            window.location.href = "/login";
+          }}
+          src="./logout-icon.png"
+        />
       </Center>
     </>
   );

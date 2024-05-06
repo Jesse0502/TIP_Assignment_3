@@ -1,4 +1,10 @@
-import { art_quiz, math_quiz, music_quiz, science_quiz } from "./constants";
+import {
+  art_quiz,
+  bio_quiz,
+  math_quiz,
+  music_quiz,
+  science_quiz,
+} from "./constants";
 
 const quizLoader = (query: string) => {
   if (query.toLocaleLowerCase().includes("science")) {
@@ -9,6 +15,8 @@ const quizLoader = (query: string) => {
     return art_quiz;
   } else if (query.toLocaleLowerCase().includes("music")) {
     return music_quiz;
+  } else if (query.toLocaleLowerCase().includes("biology")) {
+    return bio_quiz;
   }
 };
 

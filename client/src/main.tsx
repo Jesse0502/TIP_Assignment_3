@@ -11,6 +11,7 @@ import Search from "./Routes/Search.tsx";
 import Leaderboard from "./Routes/Leaderboard.tsx";
 import Profile from "./Routes/Profile.tsx";
 import Quiz from "./Routes/Quiz.tsx";
+import Guard from "./components/Guard.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -20,11 +21,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/login" element={<App />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/quiz" element={<Quiz />} />
+            <Route path="" element={<Guard />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/quiz" element={<Quiz />} />
+            </Route>
           </Routes>
         </Provider>
       </ChakraProvider>

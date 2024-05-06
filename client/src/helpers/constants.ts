@@ -459,3 +459,117 @@ export const music_quiz: {
     },
   ],
 };
+
+export const bio_quiz: {
+  name: string;
+  questions: number;
+  rating: number;
+  duration: string;
+  image: string;
+  quiz: {
+    question: string;
+    options: string[];
+    answer: string;
+    explanation: string;
+  }[];
+} = {
+  name: "Biology Quiz",
+  questions: 10,
+  rating: 4,
+  duration: "20min",
+  image:
+    "https://img.freepik.com/free-vector/flat-national-science-day-background_23-2149283127.jpg?size=626&ext=jpg&ga=GA1.1.553209589.1714867200&semt=ais",
+  quiz: [
+    {
+      question: "What is the powerhouse of the cell?",
+      options: ["Mitochondria", "Nucleus", "Ribosome", "Golgi Apparatus"],
+      answer: "Mitochondria",
+      explanation:
+        "Mitochondria are often called the powerhouse of the cell because they produce energy in the form of ATP through cellular respiration.",
+    },
+    {
+      question: "What is the largest organ in the human body?",
+      options: ["Skin", "Liver", "Heart", "Brain"],
+      answer: "Skin",
+      explanation:
+        "The skin is the largest organ in the human body, serving as a protective barrier and regulating body temperature.",
+    },
+    {
+      question: "What is the primary function of red blood cells?",
+      options: [
+        "Carrying oxygen",
+        "Digesting food",
+        "Producing hormones",
+        "Filtering blood",
+      ],
+      answer: "Carrying oxygen",
+      explanation:
+        "Red blood cells, or erythrocytes, transport oxygen from the lungs to the body's tissues and carry carbon dioxide back to the lungs.",
+    },
+    {
+      question: "What is the main function of the respiratory system?",
+      options: [
+        "Exchange gases",
+        "Regulate body temperature",
+        "Digest food",
+        "Control movement",
+      ],
+      answer: "Exchange gases",
+      explanation:
+        "The respiratory system facilitates the exchange of oxygen and carbon dioxide between the body and the environment through breathing.",
+    },
+    {
+      question: "What is the smallest bone in the human body?",
+      options: ["Stapes", "Femur", "Tibia", "Radius"],
+      answer: "Stapes",
+      explanation:
+        "The stapes, also known as the stirrup bone, is the smallest bone in the human body and is located in the middle ear.",
+    },
+    {
+      question: "Which hormone regulates blood sugar levels?",
+      options: ["Insulin", "Estrogen", "Testosterone", "Thyroxine"],
+      answer: "Insulin",
+      explanation:
+        "Insulin is a hormone produced by the pancreas that helps regulate blood sugar levels by facilitating glucose uptake into cells.",
+    },
+    {
+      question:
+        "What is the function of white blood cells in the immune system?",
+      options: [
+        "Fight infections",
+        "Produce antibodies",
+        "Transport oxygen",
+        "Store nutrients",
+      ],
+      answer: "Fight infections",
+      explanation:
+        "White blood cells, or leukocytes, play a crucial role in the immune system by fighting infections and foreign invaders.",
+    },
+    {
+      question: "Which organ produces bile for digestion?",
+      options: ["Liver", "Pancreas", "Stomach", "Gallbladder"],
+      answer: "Liver",
+      explanation:
+        "The liver produces bile, a digestive fluid that helps break down fats and aids in the digestion and absorption of nutrients.",
+    },
+    {
+      question: "What is the purpose of photosynthesis in plants?",
+      options: [
+        "Produce oxygen",
+        "Generate energy",
+        "Absorb water",
+        "Release carbon dioxide",
+      ],
+      answer: "Generate energy",
+      explanation:
+        "Photosynthesis is the process by which plants convert sunlight into chemical energy (glucose) to fuel their growth and metabolism.",
+    },
+    {
+      question: "Which part of the brain controls balance and coordination?",
+      options: ["Cerebellum", "Frontal lobe", "Hippocampus", "Pituitary gland"],
+      answer: "Cerebellum",
+      explanation:
+        "The cerebellum, located at the back of the brain, plays a key role in coordinating movement, balance, and posture.",
+    },
+  ],
+};

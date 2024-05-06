@@ -10,6 +10,7 @@ import {
   Image,
   Input,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { server_endpoint } from "./helpers/constants";
@@ -21,6 +22,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(true);
+  const toast = useToast();
+
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     const fullname = e.target[0].value;
@@ -35,12 +39,17 @@ function App() {
       password,
       confirmPassword,
     });
-
+    setIsLogin(true);
     setIsLoading(false);
+    toast({
+      title: "Account created.",
+      description: "We've created your account for you.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
     console.log(res.data);
   };
-
-  const [isLogin, setIsLogin] = useState(true);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();

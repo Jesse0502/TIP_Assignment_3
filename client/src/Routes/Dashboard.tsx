@@ -4,6 +4,7 @@ import QuizTab from "../components/QuizTab";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { SpinnerIcon } from "@chakra-ui/icons";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -19,9 +20,29 @@ const Dashboard = () => {
         maxHeight={"100vh"}
         overflowY={"scroll"}
       >
-        <Text fontWeight={"bold"} fontSize={"xx-large"}>
-          Welcome, {userInfo.fullname}
-        </Text>
+        <Flex justify={"space-between"} align={"center"}>
+          <Text fontWeight={"bold"} fontSize={"xx-large"}>
+            Welcome, {userInfo.fullname}
+          </Text>
+          <Flex
+            mr="10"
+            align={"center"}
+            justify={"center"}
+            p="5px"
+            cursor={"pointer"}
+            shadow={"md"}
+            _active={{ shadow: "none" }}
+            onClick={() => {
+              window.location.reload();
+            }}
+            // _hover={{ shadow: "none" }}
+            rounded="30px"
+            border={"1px solid gray"}
+          >
+            <SpinnerIcon />
+            <Text ml="1">Refresh</Text>
+          </Flex>
+        </Flex>
         <Text fontWeight={"bold"} mt="5" fontSize={"x-large"}>
           Featured Quizzes
         </Text>
@@ -29,26 +50,32 @@ const Dashboard = () => {
           <Flex gap="10px" w="100%" overflowX="auto">
             <QuizTab
               name="Science Quiz"
-              duration="20min"
+              questions="10"
               rating="4"
               image="https://static.vecteezy.com/system/resources/thumbnails/013/717/509/small/school-education-and-science-doodle-background-free-vector.jpg"
             />
 
             <QuizTab
               name="Math Quiz"
-              duration="10min"
+              questions="10"
               rating="3"
               image="https://t3.ftcdn.net/jpg/04/83/90/18/360_F_483901821_46VsNR67uJC3xIKQN4aaxR6GtAZhx9G8.jpg"
             />
             <QuizTab
+              name="Biology Quiz"
+              questions="10"
+              rating="4"
+              image="https://img.freepik.com/free-vector/flat-national-science-day-background_23-2149283127.jpg?size=626&ext=jpg&ga=GA1.1.553209589.1714867200&semt=ais"
+            />
+            <QuizTab
               name="Art Quiz"
-              duration="20min"
+              questions="10"
               rating="4.3"
               image="https://t3.ftcdn.net/jpg/02/28/18/62/360_F_228186227_hTEQS8k4VtopmEVnkBbPvOaSIfXsqWON.jpg"
             />
             <QuizTab
               name="Music Quiz"
-              duration="15min"
+              questions="10"
               rating="4"
               image="https://t3.ftcdn.net/jpg/02/23/60/54/360_F_223605406_nGKtPp42ZRx4ZxvrcVeT3Ek6V5Uw4ETh.jpg"
             />
@@ -111,25 +138,6 @@ const Dashboard = () => {
               <Image w="7" src="./creative-icon.png" />
               <Text>Creative Skills</Text>
             </Center>
-          </Flex>
-        </Box>
-        <Box py="4">
-          <Text fontWeight={"bold"} fontSize={"xx-large"}>
-            My Quizzes
-          </Text>
-          <Flex
-            w="full"
-            overflow={"auto"}
-            sx={{
-              "::-webkit-scrollbar": {
-                display: "none",
-              },
-            }}
-            mt="2"
-            gap="2"
-          >
-            <MyQuizTab />
-            <MyQuizTab />
           </Flex>
         </Box>
       </Box>
