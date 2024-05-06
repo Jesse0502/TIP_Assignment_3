@@ -1,3 +1,5 @@
+Instructions for setting up a project with Node.js and running the client and server:
+
 ---
 
 # Project Setup
