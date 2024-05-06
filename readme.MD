@@ -1,5 +1,3 @@
-Certainly! Here's an example of a README.md file that provides instructions for setting up a project with Node.js and running the client and server applications:
-
 ---
 
 # Project Setup
