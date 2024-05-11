@@ -1,9 +1,6 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import {
-  Box,
   Button,
   Center,
   Flex,
@@ -25,7 +22,7 @@ function App() {
   const [isLogin, setIsLogin] = useState(true);
   const toast = useToast();
 
-  const handleRegisterSubmit = async (e) => {
+  const handleRegisterSubmit: (e: any) => void = async (e) => {
     e.preventDefault();
     const fullname = e.target[0].value;
     const username = e.target[1].value;

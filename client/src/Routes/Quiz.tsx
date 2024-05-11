@@ -112,11 +112,15 @@ const Quiz = () => {
   // const [exitingQuiz, setExitingQuiz] = useState(false);
 
   const exitQuiz = async () => {
-    // await axios.post(server_endpoint + "/exit-quiz", {
-    //   username: userInfo.username,
-    //   quizName: quiz?.name,
-    // });
-    navigate("/dashboard");
+    window.location.href = "/dashboard";
+  };
+
+  const onExitQuiz = () => {
+    if (showAnswers) {
+      window.location.href = "/dashboard";
+    } else {
+      onOpen();
+    }
   };
   return (
     <Flex>
@@ -146,7 +150,7 @@ const Quiz = () => {
               <Text opacity={0.7}>
                 Question {currentQuestion + 1}/{quiz?.questions}
               </Text>
-              <Button colorScheme="green" onClick={onOpen}>
+              <Button colorScheme="green" onClick={onExitQuiz}>
                 Exit Quiz
               </Button>
             </Flex>
